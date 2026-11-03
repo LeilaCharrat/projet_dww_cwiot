@@ -35,7 +35,7 @@ This prototype uses an arduino , a breadboard, a led screen , 220 ohm resistor a
 ![share your figma project](images/UI-figma.png)
 
 >[!TIP]
->This file is part of the dww figma, so I cannot fully share it. Your documentation should include a link to your figma: `[figma UI↗](https://figma.com/your-design)`
+>This file is part of the dww figma, so I cannot fully share it. Your documentation should include a link to your figma: `[figma UI↗]([https://figma.com/your-design](https://www.figma.com/design/daJV2P3ueyrsHtPb20c1m8/leila_dww_project?node-id=16-42&p=f&t=gZs24KLtyImzWf4f-0))`
 
 ## Web part
 Here is a preview of the assignment. 
