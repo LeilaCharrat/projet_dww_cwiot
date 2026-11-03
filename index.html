@@ -5,9 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jump</title>
     <link href="https://fonts.googleapis.com/css2?family=Nothing+You+Could+Do&display=swap" rel="stylesheet">
+    <!-- on charge le fichier script -->
     <script src="script.js" defer></script>
 
     <style>
+    /* les couleurs et la police, on peut tout changer ici */
     :root {
       --page: #f1e7df;
       --carte: #fffaf5;
@@ -19,6 +21,7 @@
 
     * { box-sizing: border-box; }
 
+    /* on met le "telephone" au milieu de l'ecran */
     body {
       margin: 0;
       min-height: 100vh;
@@ -28,6 +31,7 @@
       background: var(--page);
     }
 
+    /* le rectangle du telephone, tout est empile en colonne */
     .app {
       width: 100%;
       max-width: 400px;
@@ -43,6 +47,7 @@
       box-shadow: inset 0 0 0 1.5px var(--accent), 0 12px 40px rgba(20,32,79,.15);
     }
 
+    /* le titre avec les cordes de chaque cote */
     .titre {
       position: relative;
       width: 360px;
@@ -66,6 +71,7 @@
       line-height: 1.1;
     }
 
+    /* le cadre rouge autour de l'avatar */
     .scene {
       flex: 1;
       min-height: 0;
@@ -83,6 +89,7 @@
       object-fit: contain;
       border-radius: 14px;
     }
+    /* l'avatar monte et descend (la fonction hop() ajoute cette classe) */
     #avatar.hop { animation: hop .5s ease-out; }
     @keyframes hop {
       0%   { transform: translateY(0) scale(1, 1); }
@@ -92,9 +99,11 @@
       100% { transform: translateY(0) scale(1, 1); }
     }
 
+    /* le compteur */
     .compteur { text-align: center; font-family: var(--manuscrit); }
     .compteur small { display: block; font-size: 24px; color: var(--texte); }
     #jumpCount { display: block; font-size: 64px; line-height: 1.1; color: var(--rouge); }
+    /* le chiffre grossit un peu a chaque saut */
     #jumpCount.pulse { animation: pulse .25s ease-out; }
     @keyframes pulse {
       0%   { transform: scale(1); }
@@ -102,6 +111,7 @@
       100% { transform: scale(1); }
     }
 
+    /* le bouton pour connecter la corde */
     button {
       margin-top: 14px;
       padding: 12px 30px;
@@ -113,8 +123,10 @@
       color: #fdfaf7;
       cursor: pointer;
     }
+    /* il devient gris quand c'est connecte */
     button:disabled { background: #6b7390; border-color: #6b7390; cursor: default; }
 
+    /* le petit message sous le bouton */
     #output {
       margin: 8px 0 0;
       font-family: var(--manuscrit);
@@ -126,17 +138,19 @@
 </head>
 <body>
     <main class="app">
+        <!-- la musique, le script la lance et l'arrete -->
         <audio id="musique" src="musique.mp3" loop></audio>
 
+        <!-- titre : une corde de chaque cote de "Jump" (dessinee en svg) -->
         <div class="titre">
             <svg viewBox="0 0 360 96" aria-hidden="true">
-                <!-- côté gauche -->
+                <!-- cote gauche : la poignee, les lignes, et le fil qui fait une boucle -->
                 <rect x="4" y="41" width="36" height="14" rx="7" fill="#b3202a"/>
                 <path d="M14 44 V52 M22 44 V52 M30 44 V52" stroke="#fffaf5" stroke-width="1.8" stroke-linecap="round"/>
                 <path d="M40 48 C 54 48 58 70 72 66 C 88 61 80 30 64 35 C 52 39 66 57 86 52 C 96 49 102 46 108 43"
                       fill="none" stroke="#b3202a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
 
-                <!-- côté droit (miroir) -->
+                <!-- cote droit : pareil mais retourne comme un miroir -->
                 <g transform="translate(360,0) scale(-1,1)">
                     <rect x="4" y="41" width="36" height="14" rx="7" fill="#b3202a"/>
                     <path d="M14 44 V52 M22 44 V52 M30 44 V52" stroke="#fffaf5" stroke-width="1.8" stroke-linecap="round"/>
@@ -148,15 +162,18 @@
             <h1>Jump</h1>
         </div>
 
+        <!-- l'avatar : repos.png quand on saute pas, saut.gif quand on saute -->
         <div class="scene">
             <img id="avatar" src="repos.png" alt="avatar">
         </div>
 
+        <!-- le nombre vient de l'arduino -->
         <div class="compteur">
             <small>Jump count</small>
             <span id="jumpCount">0</span>
         </div>
 
+        <!-- le clic ouvre le choix du port et lance tout -->
         <button id="connectBtn">Connecter la corde</button>
         <p id="output"></p>
     </main>
