@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jump</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nothing+You+Could+Do&display=swap" rel="stylesheet">
+    <script src="script.js" defer></script>
+
+    <style>
+    :root {
+      --page: #f1e7df;
+      --carte: #fffaf5;
+      --rouge: #b3202a;
+      --texte: #14204f;
+      --accent: #c9a46a;
+      --manuscrit: "Nothing You Could Do", "Segoe Script", cursive;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: var(--page);
+    }
+
+    .app {
+      width: 100%;
+      max-width: 400px;
+      height: min(100vh, 820px);
+      background: var(--carte);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px 20px 26px;
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: inset 0 0 0 1.5px var(--accent), 0 12px 40px rgba(20,32,79,.15);
+    }
+
+    .titre {
+      position: relative;
+      width: 360px;
+      max-width: 100%;
+      height: 96px;
+      flex-shrink: 0;
+    }
+    .titre svg { position: absolute; left: 0; top: 0; width: 100%; height: 100%; }
+
+    h1 {
+      position: absolute;
+      top: 22px;
+      left: 0;
+      right: 0;
+      margin: 0;
+      text-align: center;
+      font-family: var(--manuscrit);
+      font-weight: 400;
+      font-size: 44px;
+      color: var(--texte);
+      line-height: 1.1;
+    }
+
+    .scene {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      align-items: center;
+      margin: 14px 0;
+      padding: 8px;
+      background: var(--rouge);
+      border-radius: 20px;
+      overflow: hidden;
+    }
+    #avatar {
+      max-height: 100%;
+      max-width: 100%;
+      object-fit: contain;
+      border-radius: 14px;
+    }
+    #avatar.hop { animation: hop .5s ease-out; }
+    @keyframes hop {
+      0%   { transform: translateY(0) scale(1, 1); }
+      15%  { transform: translateY(4px) scale(1.03, .97); }
+      50%  { transform: translateY(-34px) scale(.98, 1.02); }
+      85%  { transform: translateY(0) scale(1.03, .97); }
+      100% { transform: translateY(0) scale(1, 1); }
+    }
+
+    .compteur { text-align: center; font-family: var(--manuscrit); }
+    .compteur small { display: block; font-size: 24px; color: var(--texte); }
+    #jumpCount { display: block; font-size: 64px; line-height: 1.1; color: var(--rouge); }
+    #jumpCount.pulse { animation: pulse .25s ease-out; }
+    @keyframes pulse {
+      0%   { transform: scale(1); }
+      40%  { transform: scale(1.25); }
+      100% { transform: scale(1); }
+    }
+
+    button {
+      margin-top: 14px;
+      padding: 12px 30px;
+      font-family: var(--manuscrit);
+      font-size: 20px;
+      border: 2px solid var(--texte);
+      border-radius: 999px;
+      background: var(--texte);
+      color: #fdfaf7;
+      cursor: pointer;
+    }
+    button:disabled { background: #6b7390; border-color: #6b7390; cursor: default; }
+
+    #output {
+      margin: 8px 0 0;
+      font-family: var(--manuscrit);
+      font-size: 15px;
+      color: var(--rouge);
+      min-height: 1em;
+    }
+    </style>
+</head>
+<body>
+    <main class="app">
+        <audio id="musique" src="musique.mp3" loop></audio>
+
+        <div class="titre">
+            <svg viewBox="0 0 360 96" aria-hidden="true">
+                <!-- côté gauche -->
+                <rect x="4" y="41" width="36" height="14" rx="7" fill="#b3202a"/>
+                <path d="M14 44 V52 M22 44 V52 M30 44 V52" stroke="#fffaf5" stroke-width="1.8" stroke-linecap="round"/>
+                <path d="M40 48 C 54 48 58 70 72 66 C 88 61 80 30 64 35 C 52 39 66 57 86 52 C 96 49 102 46 108 43"
+                      fill="none" stroke="#b3202a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+                <!-- côté droit (miroir) -->
+                <g transform="translate(360,0) scale(-1,1)">
+                    <rect x="4" y="41" width="36" height="14" rx="7" fill="#b3202a"/>
+                    <path d="M14 44 V52 M22 44 V52 M30 44 V52" stroke="#fffaf5" stroke-width="1.8" stroke-linecap="round"/>
+                    <path d="M40 48 C 54 48 58 26 72 30 C 88 35 80 66 64 61 C 52 57 66 39 86 44 C 96 47 102 52 108 56"
+                          fill="none" stroke="#b3202a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                </g>
+            </svg>
+
+            <h1>Jump</h1>
+        </div>
+
+        <div class="scene">
+            <img id="avatar" src="repos.png" alt="avatar">
+        </div>
+
+        <div class="compteur">
+            <small>Jump count</small>
+            <span id="jumpCount">0</span>
+        </div>
+
+        <button id="connectBtn">Connecter la corde</button>
+        <p id="output"></p>
+    </main>
+</body>
+</html>
