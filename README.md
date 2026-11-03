@@ -43,4 +43,4 @@ Here is a preview of the assignment.
 
 ## Video
 
-[See the video on youtube↗]()
+[See the video on youtube↗](https://youtu.be/oTbxUGMudmI)
